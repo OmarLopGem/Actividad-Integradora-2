@@ -199,7 +199,6 @@ void P3(std::vector<coord> locations){
 int main(){
     
     int N = 0;
-<<<<<<< HEAD
 
     std::string path;
 
@@ -210,9 +209,7 @@ int main(){
     std::ifstream file;
     file.open(path);
     
-=======
     //Recibimos los parametros dados por el usuario
->>>>>>> main
     std::cout << "Ingrese el numero de colonias en la ciudad : ";
     file >> N;
     int T = N*N;
@@ -237,13 +234,10 @@ int main(){
         locations[i].x = std::stof(s.substr(1 , s.find(",")));
         locations[i].y = std::stof(s.substr(s.find(",") + 1, s.length()));
     }
-<<<<<<< HEAD
 
     file.close();
 
-=======
     //Primer algoritmo empleado
->>>>>>> main
     P1(N,M);
 
     //Declaramos nuestros vectores a utilizar en este codigo
