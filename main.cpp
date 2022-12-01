@@ -7,6 +7,7 @@
 #include <string.h>  
 #include <queue> 
 #include <map>
+#include <fstream>
 
 int costoMinimo = INT_MAX;
 std::vector<int> Nodos;
@@ -180,9 +181,18 @@ void P3(std::vector<coord> locations){
 int main(){
     
     int N = 0;
+
+    std::string path;
+
+    std::cout << "Intrese el nombre del archivo que contiene las entradas: "<<std::endl; 
+    
+    std::cin >> path;
+
+    std::ifstream file;
+    file.open(path);
     
     std::cout << "Ingrese el numero de colonias en la ciudad : ";
-    std::cin >> N;
+    file >> N;
     int T = N*N;
     std::vector<std::vector<int>> M(N, std::vector<int> (N));
     std::vector<coord> locations(N);
@@ -192,18 +202,20 @@ int main(){
 
     for(int i = 0; i < N; i++){
         for(int j = 0; j < N; j++){
-            std::cin >> M[i][j];
+            file >> M[i][j];
         }
     }
 
     std::cout << "Ingrese las coordenadas de las centrales con el formato (x,y)" << std::endl;
 
     for(int i = 0; i < N; i++){
-        std::cin >> s;
+        file >> s;
         locations[i].index = i;
         locations[i].x = std::stof(s.substr(1 , s.find(",")));
         locations[i].y = std::stof(s.substr(s.find(",") + 1, s.length()));
     }
+
+    file.close();
 
     P1(N,M);
 
