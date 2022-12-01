@@ -45,8 +45,56 @@ struct coord
     float dist;
 };
 
-void P1(){
+//La funcion encuentra el vertice que tenga el menor costo
+//de entre los que aun no se encuentren en el MST
+int minMST(int N, std::vector<int> mins, std::vector<bool> flags){
+    int MIN=INT_MAX;
+    int min_i; //almacena el indice del mínimo
+    
+    //recorre la cantidad de colonias o nodos que haya
+    for(int i=0; i<N; i++){
+        //si el nodo no se ha marcado y el minimo es menor que el minimo actual
+        //entonces se añade el minimo encontrado a la variable MIN y se da
+        //el indice
+        if (flags[i]==false && mins[i]<MIN){
+            MIN=mins[i];
+            min_i=i;
+        }
+    }
+    return min_i; //Retorna el indice del minimo
+}
 
+//Buscará el MST usando el algoritmo de Prim, utilizando el vector de la matriz de adyacencias y
+//seleccionando los nodos a los que se moverá a la vez que marca cuales ya se han cruzado, con el fin de 
+//no repetir y crear ciclos.
+void P1(int N, std::vector<std::vector<int>> M){
+    std::vector<int> MST(N);            //vector para guardar el mst
+    std::vector<int> mins(N, INT_MAX);  //valores minimos de arista
+    std::vector<bool> flags(N, false);  //booleanos para marcar los nodos
+
+    mins[0]= 0; //el minimmo de la posicion 0 será 0 para que siempre sea el inicial
+    MST[0]= -1;
+    
+    for(int i=0; i<N-1; i++){
+        int r = minMST(N, mins, flags); //escogerá el minimo que aun no esté en el MST
+        flags[r] = true; //añade el vertice escogido al MST
+        
+        //El segundo ciclo añade los vertices que se seleccionen, solo
+        //añadiendo aquellos que aún no e hayen en el MST
+        for(int j=0; j<N; j++){
+            if (M[r][j] && flags[j] == false
+				&& M[r][j] < mins[j])
+				MST[j] = r, mins[j] = M[r][j];
+        }
+    }
+
+    //Este ultimo ciclo unicamnte va a imprimir los nodos que se requieren para el MST y así
+    //tener conexos todos los nodos.
+    std::cout<<"Mejor forma de cableado\n";
+    for (int i = 1; i<N; i++){
+        std::cout<<"colonia "<<MST[i]<<" ->"<<" colonia "<<i<<"\t distancia : "<<M[i][MST[i]];
+        std::cout<<std::endl;
+    }
 }
 
 void caminoMinimo(std::vector<std::vector<int>> &M, std::vector<int> &Camino, std::vector<int> &NodosVisitados, int costo, int index, int N,std::vector<int> &Nodos, std::vector<int> &CaminoFinal, int posCamino){
@@ -156,7 +204,8 @@ int main(){
         locations[i].x = std::stof(s.substr(1 , s.find(",")));
         locations[i].y = std::stof(s.substr(s.find(",") + 1, s.length()));
     }
-    
+
+    P1(N,M);
 
     std::vector<int> NodosVisitados(N);
     std::vector<int> Camino(N);
