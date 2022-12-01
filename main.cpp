@@ -23,14 +23,6 @@ void P2(){
 
 void P3(std::vector<coord> locations){
 
-    // struct cmp{
-    //     bool operator()(coord a, coord b){
-    //         return a.dist > b.dist;
-    //     }
-    // };
-
-    // std::priority_queue<coord, std::vector<coord>, cmp> centrals;
-
     std::string s;
     coord client;
     coord closest;
