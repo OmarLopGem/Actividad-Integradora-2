@@ -33,7 +33,7 @@ void P3(std::vector<coord> locations){
     coord closest;
     std::string s;
 
-    std::cout<<"Ingrese la coordenada del nuevo cliente (x,y):"<<std::endl;
+    std::cout<<"Ingrese la coordenada del nuevo cliente con el formato (x,y):"<<std::endl;
     std::cin >> s;
     client.x = std::stof(s.substr(1 , s.find(",")));
     client.y = std::stof(s.substr(s.find(",") + 1, s.length()));
@@ -65,6 +65,8 @@ int main(){
             std::cin >> M[i][j];
         }
     }
+
+    std::cout << "Ingrese las coordenadas de las centrales con el formato (x,y)" << std::endl;
 
     for(int i = 0; i < N; i++){
         std::cin >> s;
