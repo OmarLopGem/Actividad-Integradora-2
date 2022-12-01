@@ -1,3 +1,13 @@
+//Autores:
+//  Fernando Resendiz Bautista A01769659
+//  Jorge Omar Lopez Gemigniani A01769675
+//  Carlos Eduardo Jimenez Santiago A01769960
+//
+//Ultima fecha de modificacion : 1 de diciembre de 2022
+//
+//Explicaicon: El siguiente codigo da respuesta a la actividad integradora 2, cubriendo los 3 puntos principales con algoritmos adecuados para la misma
+//solucion de los diferentes problemas. Cada seccion del codigo que responde un punto tiene sus propios comentarios para un mejor entendimiento.
+
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -98,8 +108,11 @@ void P1(int N, std::vector<std::vector<int>> M){
     }
 }
 
+//Funcion encargada de buscar el camino con menor costo en un ciclo hamiltoniano
 void caminoMinimo(std::vector<std::vector<int>> &M, std::vector<int> &Camino, std::vector<int> &NodosVisitados, int costo, int index, int N,std::vector<int> &Nodos, std::vector<int> &CaminoFinal, int posCamino){
+    //Si hemos revisado todos los nodos
     if (index == N){
+        //Si el nuevo costo es menor que el anterior entonces cambiamos el camino y el costo minimo
         if(costo + M[Camino[index - 1]][0] < costoMinimo){
             CaminoFinal = Camino;
         }
@@ -107,6 +120,7 @@ void caminoMinimo(std::vector<std::vector<int>> &M, std::vector<int> &Camino, st
         return;
     }
 
+    //El ciclo for es para ir revisando todos los nodos y llevar registro de que nodos visitamos para asi no crear ciclos
     for(int i = 1; i < N; i++){
         if(M[Camino[index - 1]][i] && NodosVisitados[i] == 0){
             Camino[index] = i;
@@ -121,7 +135,9 @@ void caminoMinimo(std::vector<std::vector<int>> &M, std::vector<int> &Camino, st
     return;
 }
 
+//Esta funcion se encarga de declarar algunas variables que se usaran
 void P2(std::vector<std::vector<int>> &M, std::vector<int> &NodosVisitados, std::vector<int> &Camino, int N,std::vector<int> &Nodos, std::vector<int> &CaminoFinal){
+    //Este ciclo for se encarga de generar los valores dentro de las matrices para saber el camino y los nodos visitados
     for(int i = 0; i < N; i++){
         Camino[i] = -1;
         NodosVisitados[i] = 0;
@@ -135,10 +151,11 @@ void P2(std::vector<std::vector<int>> &M, std::vector<int> &NodosVisitados, std:
     return;
 }
 
+//Esta funcion traduce el camino de numeros a letras del abecedario
 std::string numbers2Letters(std::vector<int> &CaminoFinal){
     std::string Path;
     
-
+    //El ciclo for se encarga de usar el diccionario (o mapa) para saber que letra representa cada numero
     for(int i = 0; i < CaminoFinal.size(); i++){
         int num2Let = CaminoFinal[i];
         std::string letter = diccNumLet[num2Let];
@@ -181,7 +198,7 @@ void P3(std::vector<coord> locations){
 int main(){
     
     int N = 0;
-    
+    //Recibimos los parametros dados por el usuario
     std::cout << "Ingrese el numero de colonias en la ciudad : ";
     std::cin >> N;
     int T = N*N;
@@ -191,6 +208,7 @@ int main(){
 
     std::cout << "Ingrese los valores de la matriz de distancias entre las colonias" << std::endl;
 
+    //Este ciclo for recibe la matriz de adyacencias
     for(int i = 0; i < N; i++){
         for(int j = 0; j < N; j++){
             std::cin >> M[i][j];
@@ -198,20 +216,22 @@ int main(){
     }
 
     std::cout << "Ingrese las coordenadas de las centrales con el formato (x,y)" << std::endl;
-
+    //Este ciclo for recibe la entrada de las coordenadas
     for(int i = 0; i < N; i++){
         std::cin >> s;
         locations[i].index = i;
         locations[i].x = std::stof(s.substr(1 , s.find(",")));
         locations[i].y = std::stof(s.substr(s.find(",") + 1, s.length()));
     }
-
+    //Primer algoritmo empleado
     P1(N,M);
 
+    //Declaramos nuestros vectores a utilizar en este codigo
     std::vector<int> NodosVisitados(N);
     std::vector<int> Camino(N);
     std::vector<int> CaminoFinal(N);
     
+    //Segundo algoritmo empleado
     P2(M, NodosVisitados, Camino, N, Nodos, CaminoFinal);
 
     std::cout << "El costo del camino mas corto para recorrer todas las colonias y regresar el origen es de : " << costoMinimo << std::endl;
@@ -223,6 +243,7 @@ int main(){
     
     std::cout <<"El camino a seguir es el siguiente : " << Path << std::endl;
     
+    //Tercer algoritmo empleado
     P3(locations);
 
     return 0;
