@@ -154,17 +154,23 @@ void P3(std::vector<coord> locations){
     closest.dist = std::numeric_limits<float>::max();
 
     std::cout<<"Ingrese la coordenada del nuevo cliente con el formato (x,y):"<<std::endl;
+    //Almacena la coordenada en un string formato (x,y)
     std::cin >> s;
+    //Extrae el valor de la coordenada x
     client.x = std::stof(s.substr(1 , s.find(",")));
+    //Extrae el valor de la coordenada x
     client.y = std::stof(s.substr(s.find(",") + 1, s.length()));
 
     for(coord & central : locations){
+        // Calcula la distancia de cada central al cliente
         central.dist = sqrt(pow(central.x - client.x,2) + pow(central.y - client.y,2));
+        // Si la distancia es menor a la menor distancia encontrada hasta el momento se sustituye el valor
         if(central.dist < closest.dist){
             closest = central;
         }
     }
 
+    // Imprime el número de la central más cercana, su distancia y su ubicación
     std::cout<<"La central mas cercana al nuevo cliente es la central #"<<closest.index<<std::endl;
     std::cout<<"La cual se enctuentra a una distancia de "<<closest.dist<<std::endl;
     std::cout<<"En la coordenada: "<<"("<<closest.x<<","<<closest.y<<")"<<std::endl;
