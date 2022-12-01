@@ -18,6 +18,7 @@
 #include <string.h>  
 #include <queue> 
 #include <map>
+#include <fstream>
 
 int costoMinimo = INT_MAX;
 std::vector<int> Nodos;
@@ -198,9 +199,22 @@ void P3(std::vector<coord> locations){
 int main(){
     
     int N = 0;
+<<<<<<< HEAD
+
+    std::string path;
+
+    std::cout << "Intrese el nombre del archivo que contiene las entradas: "<<std::endl; 
+    
+    std::cin >> path;
+
+    std::ifstream file;
+    file.open(path);
+    
+=======
     //Recibimos los parametros dados por el usuario
+>>>>>>> main
     std::cout << "Ingrese el numero de colonias en la ciudad : ";
-    std::cin >> N;
+    file >> N;
     int T = N*N;
     std::vector<std::vector<int>> M(N, std::vector<int> (N));
     std::vector<coord> locations(N);
@@ -211,19 +225,25 @@ int main(){
     //Este ciclo for recibe la matriz de adyacencias
     for(int i = 0; i < N; i++){
         for(int j = 0; j < N; j++){
-            std::cin >> M[i][j];
+            file >> M[i][j];
         }
     }
 
     std::cout << "Ingrese las coordenadas de las centrales con el formato (x,y)" << std::endl;
     //Este ciclo for recibe la entrada de las coordenadas
     for(int i = 0; i < N; i++){
-        std::cin >> s;
+        file >> s;
         locations[i].index = i;
         locations[i].x = std::stof(s.substr(1 , s.find(",")));
         locations[i].y = std::stof(s.substr(s.find(",") + 1, s.length()));
     }
+<<<<<<< HEAD
+
+    file.close();
+
+=======
     //Primer algoritmo empleado
+>>>>>>> main
     P1(N,M);
 
     //Declaramos nuestros vectores a utilizar en este codigo
