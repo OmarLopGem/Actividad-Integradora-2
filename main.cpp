@@ -5,6 +5,7 @@
 
 struct coord
 {
+    int index;
     float x;
     float y;
     float dist;
@@ -45,8 +46,9 @@ void P3(std::vector<coord> locations){
 
     closest = centrals.top();
 
-    std::cout<<"La central mas cercana al nuevo cliente esta en la coordenada: "<<std::endl;
-    std::cout<<"("<<closest.x<<","<<closest.y<<")"<<std::endl;
+    std::cout<<"La central mas cercana al nuevo cliente es la central #"<<closest.index<<std::endl;
+    std::cout<<"La cual se enctuentra a una distancia de "<<closest.dist<<std::endl;
+    std::cout<<"En la coordenada: "<<"("<<closest.x<<","<<closest.y<<")"<<std::endl;
 
 }
 
@@ -70,6 +72,7 @@ int main(){
 
     for(int i = 0; i < N; i++){
         std::cin >> s;
+        locations[i].index = i;
         locations[i].x = std::stof(s.substr(1 , s.find(",")));
         locations[i].y = std::stof(s.substr(s.find(",") + 1, s.length()));
     }
