@@ -2,6 +2,7 @@
 #include <vector>
 #include <queue>
 #include <cmath>
+#include <limits>
 
 struct coord
 {
@@ -22,17 +23,18 @@ void P2(){
 
 void P3(std::vector<coord> locations){
 
-    struct cmp{
-        bool operator()(coord a, coord b){
-            return a.dist > b.dist;
-        }
-    };
+    // struct cmp{
+    //     bool operator()(coord a, coord b){
+    //         return a.dist > b.dist;
+    //     }
+    // };
 
-    std::priority_queue<coord, std::vector<coord>, cmp> centrals;
+    // std::priority_queue<coord, std::vector<coord>, cmp> centrals;
 
+    std::string s;
     coord client;
     coord closest;
-    std::string s;
+    closest.dist = std::numeric_limits<float>::max();
 
     std::cout<<"Ingrese la coordenada del nuevo cliente con el formato (x,y):"<<std::endl;
     std::cin >> s;
@@ -41,10 +43,10 @@ void P3(std::vector<coord> locations){
 
     for(coord & central : locations){
         central.dist = sqrt(pow(central.x - client.x,2) + pow(central.y - client.y,2));
-        centrals.push(central);
+        if(central.dist < closest.dist){
+            closest = central;
+        }
     }
-
-    closest = centrals.top();
 
     std::cout<<"La central mas cercana al nuevo cliente es la central #"<<closest.index<<std::endl;
     std::cout<<"La cual se enctuentra a una distancia de "<<closest.dist<<std::endl;
